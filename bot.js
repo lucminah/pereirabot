@@ -80,4 +80,4 @@ function image(message, parts) {
 	});
 }
 
-client.login(config.token);
+client.login(token.token);
