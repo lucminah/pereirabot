@@ -1,0 +1,3 @@
+* PereiraBot
+  Um bot para entreter fãs de Ednaldo Pereira na plataforma Discord.
+  Escrito em JavaScript, utilizando NodeJS.

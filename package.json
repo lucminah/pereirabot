@@ -1,0 +1,19 @@
+{
+  "name": "discordjs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bot.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "discord.js": "^11.5.1",
+    "jimp": "^0.9.3",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
