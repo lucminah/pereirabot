@@ -1,10 +1,14 @@
 const Discord = require("discord.js");
 const cheerio =  require("cheerio");
 const request =  require("request");
+const ytdl = require("ytdl-core")
 
 const client = new Discord.Client();
 const config = require("./config.json");
+const botToken = require("./token.json");
 const prefix = config.prefix;
+
+var servers = {};
 
 client.on("ready", () => {
 
@@ -14,34 +18,72 @@ client.on("ready", () => {
 
 });
 
-
 client.on("message", async message => {
 
-	var parts = message.content.split(" ");
-	let comandoBase = parts[0];
+	var args = message.content.substring(prefix.length).split(" ");
+	let comando = args[0];
 
-	//if(!comandoBase.startsWith(prefix)) return;
+	//if(!comando.startsWith(prefix)) return;
 	if(message.author.bot) return;
 
-	if(comandoBase === prefix + "ednaldo") {
+	switch(comando) {
+		
+	case 'ednaldo':
 		await message.channel.send("pereira.");
-	}
+		break;
 
-	if(comandoBase === prefix + "pereira") {
+	case 'pereira':
+		let pereiraArgs = args.slice(1).join(" ").split(", ");
 
-		let args = parts.slice(1).join(" ").split(", ");
+		let arg1 = pereiraArgs[0];
+		if(!pereiraArgs[0]) arg1 = "diamante"
 
-		let arg1 = args[0];
-		if(arg1 === "" || arg1 === undefined ) arg1 = "diamante"
-
-		let arg2 = args[1];
-		if(arg2 === "" || arg2 === undefined) arg2 = "marcante"
+		let arg2 = pereiraArgs[1];
+		if(!pereiraArgs[1]) arg2 = "marcante"
 
 		await message.channel.send(`Brilhando como um ${arg1} em uma geracao ${arg2}`);
-	}
+		break;
 
-	if(comandoBase === prefix + "mestre") {
-		image(message, parts);
+	case 'mestre':
+		sendImage(message, args);
+		break;
+
+	case 'punda':
+
+		function play(connection, message) {
+			var servidor = servers[message.guild.id];
+
+			servidor.dispatcher = connection.playStream(ytdl(servidor.queue[0], { filter: "audioonly" }));
+
+			servidor.queue.shift();
+
+			servidor.dispatcher.on("end", function() {
+				if(!servidor.queue[0]) connection.disconnect();
+				play(connection, message);
+			})
+		}
+
+		if(!message.member.voiceChannel) {
+			message.channel.send("Entre num canal para tocarrr! pum tss pummmm~~");
+			return;
+		}
+
+		if(!servers[message.guild.id])
+			servers[message.guild.id] =
+			{
+				queue: []
+			}
+
+		var servidor = servers[message.guild.id];
+
+		servidor.queue.push(args[1]);
+
+		if(!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection){
+			play(connection, message);
+		});
+
+		break;
+
 	}
 
 	console.log(`enviada mensagem '${message}' por ${message.author.username} (id: ${message.author.id})`)
@@ -53,9 +95,9 @@ client.on("message", async message => {
 
 });
 
-function image(message, parts) {
+function sendImage(message, args) {
 
-	var search = parts.slice(1).join(" ");
+	var search = args.slice(1).join(" ");
 	if(search.length === 0) search = "ednaldo pereira";
 
 	var options = {
@@ -71,8 +113,8 @@ function image(message, parts) {
 		if(error) return;
 
 		$ = cheerio.load(responseBody);
-		var links = $(".image a.link");
-		var urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
+		let links = $(".image a.link");
+		let urls = new Array(links.length).fill(0).map((v, i) => links.eq(i).attr("href"));
 		
 		if(!urls.length) return;
 		
@@ -80,4 +122,4 @@ function image(message, parts) {
 	});
 }
 
-client.login(token.token);
+client.login(botToken.token);
