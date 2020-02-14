@@ -1,3 +1,6 @@
 * PereiraBot
   Um bot para entreter fãs de Ednaldo Pereira na plataforma Discord.
   Escrito em JavaScript, utilizando NodeJS.
+  
+** Para utilizar esse código em seu bot
+  Incluir no projeto um arquivo token.json que contenha um objeto com atributo token, sendo este o fornecido pelo Discord no seu projeto. 
