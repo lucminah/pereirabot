@@ -36,10 +36,11 @@ client.on("message", async message => {
 		let pereiraArgs = args.slice(1).join(" ").split(", ");
 
 		let arg1 = pereiraArgs[0];
-		if(!pereiraArgs[0]) arg1 = "diamante"
+		if(!pereiraArgs[0]) arg1 = "diamante";
+		else if(pereiraArgs[0].endsWith(",")) arg1 = pereiraArgs[0].slice(0, -1);
 
 		let arg2 = pereiraArgs[1];
-		if(!pereiraArgs[1]) arg2 = "marcante"
+		if(!pereiraArgs[1]) arg2 = "marcante";
 
 		await message.channel.send(`Brilhando como um ${arg1} em uma geracao ${arg2}`);
 		break;
