@@ -5,7 +5,7 @@ const ytdl = require("ytdl-core")
 
 const client = new Discord.Client();
 const config = require("./config.json");
-const botToken = require("./token.json");
+const tokenObject = require("./token.json");
 const prefix = config.prefix;
 
 var servers = {};
@@ -20,49 +20,36 @@ client.on("ready", () => {
 
 client.on("message", async message => {
 
-	var args = message.content.substring(prefix.length).split(" ");
-	let comando = args[0];
+	var messageParts = message.content.substring(prefix.length).split(" ");
+	let command = messageParts[0];
 
-	//if(!comando.startsWith(prefix)) return;
 	if(message.author.bot) return;
+	//if(message.content.substring(0, prefix.length) != prefix) return;
 
-	switch(comando) {
+	switch(command) {
 		
 	case 'ednaldo':
 		await message.channel.send("pereira.");
 		break;
 
 	case 'pereira':
-		let pereiraArgs = args.slice(1).join(" ").split(", ");
+		var pereiraCommandArgs = messageParts.slice(1).join(" ").split(", ");
 
-		let arg1 = pereiraArgs[0];
-		if(!pereiraArgs[0]) arg1 = "diamante";
-		else if(pereiraArgs[0].endsWith(",")) arg1 = pereiraArgs[0].slice(0, -1);
+		var pereiraCommandArg1 = pereiraCommandArgs[0];
+		if(!pereiraCommandArgs[0]) pereiraCommandArg1 = "diamante";
+		else if(pereiraCommandArgs[0].endsWith(",")) pereiraCommandArg1 = pereiraCommandArgs[0].slice(0, -1);
 
-		let arg2 = pereiraArgs[1];
-		if(!pereiraArgs[1]) arg2 = "marcante";
+		var pereiraCommandArg2 = pereiraCommandArgs[1];
+		if(!pereiraCommandArgs[1]) pereiraCommandArg2 = "marcante";
 
-		await message.channel.send(`Brilhando como um ${arg1} em uma geracao ${arg2}`);
+		await message.channel.send(`Brilhando como um ${pereiraCommandArg1} em uma geracao ${pereiraCommandArg2}`);
 		break;
 
 	case 'mestre':
-		sendImage(message, args);
+		sendImage(message, messageParts);
 		break;
 
 	case 'punda':
-
-		function play(connection, message) {
-			var servidor = servers[message.guild.id];
-
-			servidor.dispatcher = connection.playStream(ytdl(servidor.queue[0], { filter: "audioonly" }));
-
-			servidor.queue.shift();
-
-			servidor.dispatcher.on("end", function() {
-				if(!servidor.queue[0]) connection.disconnect();
-				play(connection, message);
-			})
-		}
 
 		if(!message.member.voiceChannel) {
 			message.channel.send("Entre num canal para tocarrr! pum tss pummmm~~");
@@ -77,7 +64,7 @@ client.on("message", async message => {
 
 		var servidor = servers[message.guild.id];
 
-		servidor.queue.push(args[1]);
+		servidor.queue.push(messageParts[1]);
 
 		if(!message.guild.voiceConnection) message.member.voiceChannel.join().then(function(connection){
 			play(connection, message);
@@ -90,15 +77,22 @@ client.on("message", async message => {
 	console.log(`enviada mensagem '${message}' por ${message.author.username} (id: ${message.author.id})`)
 
 	if(message.content.toLowerCase().includes("ednaldo pereira")) {
-		let pereiraReactions = ["552683196693610522", "552683399366574084"]
-		message.react(pereiraReactions[Math.floor(Math.random() * pereiraReactions.length)]);
-	};
+		let reactions = ["552683196693610522", "552683399366574084"]
+		message.react(reactions[Math.floor(Math.random() * reactions.length)]);
+	}
+
+	if(message.content.toLowerCase().includes("melq") || message.content.toLowerCase().includes("melqui") || message.content.toLowerCase().includes("melk")) {
+		let reactions = ["552683196693610522", "552683399366574084"]
+		let melqMessages = ["Grande melq, um verdadeiro broderrrrrr", "Te adoro melqui", "kd melk?"]
+		message.react(reactions[Math.floor(Math.random() * reactions.length)]);
+		message.channel.send(melqMessages[Math.floor(Math.random() * melqMessages.length)]);
+	}
 
 });
 
-function sendImage(message, args) {
+function sendImage(message, messageParts) {
 
-	var search = args.slice(1).join(" ");
+	var search = messageParts.slice(1).join(" ");
 	if(search.length === 0) search = "ednaldo pereira";
 
 	var options = {
@@ -123,4 +117,17 @@ function sendImage(message, args) {
 	});
 }
 
-client.login(botToken.token);
+function play(connection, message) {
+	var servidor = servers[message.guild.id];
+
+	servidor.dispatcher = connection.playStream(ytdl(servidor.queue[0], { filter: "audioonly" }));
+
+	servidor.queue.shift();
+
+	servidor.dispatcher.on("end", function() {
+		if(!servidor.queue[0]) connection.disconnect();
+		play(connection, message);
+	})
+}
+
+client.login(tokenObject.token);

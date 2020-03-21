@@ -1,0 +1,27 @@
+Info 0    [19:43:43.920] Starting TS Server
+Info 1    [19:43:43.920] Version: 3.7.5
+Info 2    [19:43:43.920] Arguments: /usr/bin/node /usr/bin/tsserver --logFile /home/lucas/discordjs/.log/tsserver.log --logVerbosity info --cancellationPipeName /tmp/7c30d19c497c432ea027ada2d2f74171/tscancellation*
+Info 3    [19:43:43.920] Platform: linux NodeVersion: 13 CaseSensitive: true
+Info 4    [19:43:43.928] Search path: /home/lucas/discordjs
+Info 5    [19:43:43.928] For info: /home/lucas/discordjs/bot.js :: No config files found.
+Info 6    [19:43:43.931] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 7    [19:43:47.580] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 1 structureChanged: true Elapsed: 3649ms
+Info 8    [19:43:47.580] Project '/dev/null/inferredProject1*' (Inferred) 
+Info 9    [19:43:47.580] 	Files (133)
+
+Info 10   [19:43:47.580] -----------------------------------------------
+Info 11   [19:43:48.298] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 12   [19:43:48.382] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 2 structureChanged: true Elapsed: 83ms
+Info 13   [19:43:48.382] Project '/dev/null/inferredProject1*' (Inferred) 
+Info 14   [19:43:48.382] 	Files (139)
+
+Info 15   [19:43:48.382] -----------------------------------------------
+Info 16   [19:43:48.382] Structure before ensureProjectForOpenFiles:
+Info 17   [19:43:48.382] Structure after ensureProjectForOpenFiles:
+Info 18   [19:43:48.382] got projects updated in background, updating diagnostics for /home/lucas/discordjs/bot.js
+Info 19   [19:43:48.589] Starting updateGraphWorker: Project: /dev/null/inferredProject1*
+Info 20   [19:43:48.609] Finishing updateGraphWorker: Project: /dev/null/inferredProject1* Version: 3 structureChanged: false Elapsed: 20ms
+Info 21   [19:43:48.609] Different program with same set of files:: oldProgram.structureIsReused:: 2
+Info 22   [19:43:48.800] Structure before ensureProjectForOpenFiles:
+Info 23   [19:43:48.800] Structure after ensureProjectForOpenFiles:
+Info 24   [19:43:48.800] got projects updated in background, updating diagnostics for /home/lucas/discordjs/bot.js
