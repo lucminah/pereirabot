@@ -5,6 +5,6 @@
 ** Licenciamento
    PereiraBot é código livre (free software) sob a Unlicense, uma licença de domínio público. Use o código para a finalidade que quiser, da forma que quiser.
   
-** Instrucoes para utilizar esse código em seu bot
+** Instruções para utilizar esse código em seu bot
   Incluir no projeto um arquivo token.json que contenha um objeto com atributo token, sendo este o fornecido pelo Discord no seu projeto. 
   
